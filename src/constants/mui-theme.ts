@@ -26,15 +26,15 @@ export const toCssVariables = (mode?: EPaletteMode) => {
     '--color-primary-500': Colors.primary[500],
     '--color-positive-500': Colors.positive[500],
     '--color-negative-500': Colors.negative[500],
-    '--color-neutral-theme-100': Colors[`neutral/${paletteMode}-theme`][100],
-    '--color-neutral-theme-200': Colors[`neutral/${paletteMode}-theme`][200],
-    '--color-neutral-theme-300': Colors[`neutral/${paletteMode}-theme`][300],
-    '--color-neutral-theme-400': Colors[`neutral/${paletteMode}-theme`][400],
-    '--color-neutral-theme-500': Colors[`neutral/${paletteMode}-theme`][500],
-    '--color-neutral-theme-600': Colors[`neutral/${paletteMode}-theme`][600],
-    '--color-neutral-theme-700': Colors[`neutral/${paletteMode}-theme`][700],
-    '--color-neutral-theme-800': Colors[`neutral/${paletteMode}-theme`][800],
-    '--color-neutral-theme-900': Colors[`neutral/${paletteMode}-theme`][900]
+    '--color-neutral-100': Colors[`neutral/${paletteMode}-theme`][100],
+    '--color-neutral-200': Colors[`neutral/${paletteMode}-theme`][200],
+    '--color-neutral-300': Colors[`neutral/${paletteMode}-theme`][300],
+    '--color-neutral-400': Colors[`neutral/${paletteMode}-theme`][400],
+    '--color-neutral-500': Colors[`neutral/${paletteMode}-theme`][500],
+    '--color-neutral-600': Colors[`neutral/${paletteMode}-theme`][600],
+    '--color-neutral-700': Colors[`neutral/${paletteMode}-theme`][700],
+    '--color-neutral-800': Colors[`neutral/${paletteMode}-theme`][800],
+    '--color-neutral-900': Colors[`neutral/${paletteMode}-theme`][900]
   }
 }
 
@@ -46,7 +46,7 @@ export const genThemeWithPaletteMode = (paletteMode: EPaletteMode): ThemeOptions
       main: toCssVariables(paletteMode)['--color-primary-400']
     },
     text: {
-      primary: toCssVariables(paletteMode)['--color-neutral-theme-700']
+      primary: toCssVariables(paletteMode)['--color-neutral-700']
     }
   },
   typography: Typography,

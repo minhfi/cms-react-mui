@@ -2,12 +2,13 @@ import { FC, useMemo } from 'react'
 import { Provider, useSelector } from 'react-redux'
 import { Router } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import { genThemeWithPaletteMode } from './constants/mui-theme'
 import { createBrowserHistory } from 'history'
 import { getThemeMode } from './store/selectors'
 import { AppLayout } from './layout'
-import { store } from './store'
+import { store, persistor } from './store'
 
 const AppTheme: FC = () => {
   const paletteMode = useSelector(getThemeMode)
@@ -27,12 +28,18 @@ const AppTheme: FC = () => {
 
 const App: FC = () => {
   const history = createBrowserHistory()
+  const PGate = PersistGate as any
 
   return (
     <Provider store={store}>
-      <Router history={history}>
-        <AppTheme/>
-      </Router>
+      <PGate
+        loading={null}
+        persistor={persistor}
+      >
+        <Router history={history}>
+          <AppTheme/>
+        </Router>
+      </PGate>
     </Provider>
   )
 }

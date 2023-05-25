@@ -1,10 +1,18 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import { routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
 import { reducers } from './reducers'
 import { saga } from './saga'
+
+const persistConfig = {
+  key: 'store',
+  storage,
+  blacklist: ['layout']
+}
 
 const initialStore = () => {
   const sagaMiddleware = createSagaMiddleware()
@@ -17,17 +25,22 @@ const initialStore = () => {
     )
   )
 
-  const _s = createStore(
-    reducers,
+  const persistedReducer = persistReducer(persistConfig, reducers)
+
+  const store = createStore(
+    persistedReducer,
     {},
     middleware
   )
 
+  const persistor = persistStore(store)
+
   sagaMiddleware.run(saga)
-  return _s
+
+  return { store, persistor }
 }
 
-export const store = initialStore()
+export const { store, persistor } = initialStore()
 
 export type TAppState = ReturnType<typeof store.getState>
 
