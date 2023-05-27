@@ -45,11 +45,11 @@ function * login(action: { type: typeof AUTH_LOGIN; payload: {email: string; pas
     const history = createBrowserHistory()
 
     // workaround for promise with generator function
-    const { data } = yield AuthApi.login(action.payload)
+    // const { data } = yield AuthApi.login(action.payload)
 
     yield put({
       type: AUTH_SET_CREDENTIALS,
-      value: data.data
+      value: {}
     })
 
     StorageUtil.removeItem(AUTH_FALLBACK_KEY)

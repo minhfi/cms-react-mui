@@ -17,6 +17,7 @@ const AuthRoute: FC<{
 }> = (props) => {
   const location = useLocation()
 
+  console.log('props.isAuthenticated', props.isAuthenticated)
   if (props.isAuthenticated) {
     return (
       <Route
@@ -39,6 +40,7 @@ export const RouterView: FC = () => {
       <Switch>
         {routes.map(item => {
           if (item.meta?.requireAuth) {
+            console.log(item, isAuthenticated)
             return <AuthRoute key={item.path} {...item} isAuthenticated={isAuthenticated}/>
           }
 

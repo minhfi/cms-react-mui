@@ -35,8 +35,8 @@ const Login:FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const isValid = await validate({ schema: formDataSchema, data: { ...formData } })
-      if (!isValid) return null
+      // const isValid = await validate({ schema: formDataSchema, data: { ...formData } })
+      // if (!isValid) return null
 
       dispatch(setLayoutLoading(true))
 
