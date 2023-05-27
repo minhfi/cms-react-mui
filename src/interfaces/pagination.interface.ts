@@ -6,12 +6,12 @@ export interface IPaginationQuery {
   [key: string]: any
 }
 
-export interface IPaginationResponse<T> {
+export interface IDataResponse<T> {
   code?: number
   message?: string
   data?: T
 }
 
 export type TAxiosResponseData<T = any> = Promise<AxiosResponse<T>>
-export type TAxiosResponsePagination<T = any> = Promise<AxiosResponse<IPaginationResponse<T>>>
+export type TAxiosResponsePagination<T = any> = Promise<AxiosResponse<IDataResponse<T>>>
 export type TAxiosResponseList<T = any> = Promise<AxiosResponse<T[]>>

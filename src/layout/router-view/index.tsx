@@ -6,16 +6,18 @@ import { AUTH_FALLBACK_KEY } from 'src/constants'
 import { IRouterOption } from 'src/interfaces'
 import { routes } from 'src/router'
 import { LayoutContainer } from '../layout-container'
+import { useSelector } from 'react-redux'
+import { getIsAuthenticated } from 'src/store/selectors'
 
 const AuthRoute: FC<{
+  isAuthenticated: boolean | null
   path: string
   exact?: boolean
   component: IRouterOption['component']
 }> = (props) => {
   const location = useLocation()
-  const isAuthenticated = true
 
-  if (isAuthenticated) {
+  if (props.isAuthenticated) {
     return (
       <Route
         path={props.path}
@@ -29,29 +31,27 @@ const AuthRoute: FC<{
   return <Redirect to="/"/>
 }
 
-const RoutesSwitch = (
-  <Switch>
-    {routes.map(item => {
-      if (item.meta?.requireAuth) {
-        return <AuthRoute key={item.path} {...item}/>
-      }
-
-      return (
-        <Route
-          key={item.path}
-          path={item.path}
-          exact={item.exact}
-          component={item.component}
-        />
-      )
-    })}
-  </Switch>
-)
-
 export const RouterView: FC = () => {
+  const isAuthenticated = useSelector(getIsAuthenticated)
+
   return (
     <LayoutContainer>
-      {RoutesSwitch}
+      <Switch>
+        {routes.map(item => {
+          if (item.meta?.requireAuth) {
+            return <AuthRoute key={item.path} {...item} isAuthenticated={isAuthenticated}/>
+          }
+
+          return (
+            <Route
+              key={item.path}
+              path={item.path}
+              exact={item.exact}
+              component={item.component}
+            />
+          )
+        })}
+      </Switch>
     </LayoutContainer>
   )
 }

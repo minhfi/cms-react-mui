@@ -1,13 +1,10 @@
-import axios, { AxiosResponse } from 'axios'
-import { IUserModel } from 'src/interfaces'
+import axios from 'axios'
+import { IUserModel, TAxiosResponseData } from 'src/interfaces'
 
 export class ProfileApi {
-  static _prefix = '/profile'
+  static _prefix = '/api/v1/users'
 
-  /**
-   * Get authenticated profile
-   */
-  static detail(): Promise<AxiosResponse<IUserModel>> {
-    return axios.get(this._prefix)
+  static get(): TAxiosResponseData<IUserModel> {
+    return axios.get(`${this._prefix}/user-profile`)
   }
 }

@@ -7,9 +7,12 @@ export enum EHomeRoutes {
 
 export const HomeRoutes: IRouterOption[] = [
   {
-    path: '/:type(home)?',
+    path: '/dashboard',
     exact: true,
     name: EHomeRoutes.HOME,
-    component: Home
+    component: Home,
+    meta: {
+      requireAuth: true
+    }
   }
 ]
