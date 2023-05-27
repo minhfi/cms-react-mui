@@ -22,6 +22,11 @@ export const getLayoutIsLoading: TSelectorResult<ILayoutState['isLoading']> = cr
   (layout: ILayoutState) => layout.isLoading
 )
 
+export const getNavigateTo: TSelectorResult<ILayoutState['navigateTo']> = createSelector(
+  (state: TAppState) => state.layout,
+  (layout: ILayoutState) => layout.navigateTo
+)
+
 export const getLayoutNotify: TSelectorResult<ILayoutState['notify']> = createSelector(
   (state: TAppState) => state.layout,
   (layout: ILayoutState) => layout.notify

@@ -7,6 +7,7 @@ import { Button } from 'src/components/button'
 import { Input } from 'src/components/input'
 import { formDataSchema } from './schema'
 import { AUTH_LOGIN } from 'src/store/types'
+import { useHistory } from 'react-router'
 
 interface IFormData {
   email: string

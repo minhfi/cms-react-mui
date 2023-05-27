@@ -1,3 +1,4 @@
+import { LAYOUT_SET_NAVIGATE } from './../types/layout'
 import { ENotify } from 'src/constants/enum'
 import { LAYOUT_SET_NOTIFY, LAYOUT_SET_LOADING, ILayoutState, ILayoutAction, LAYOUT_RESET_CONFIG, LAYOUT_SET_ASIDE, LAYOUT_SET_HEADER, LAYOUT_SET_PAGE_TITLE } from './../types'
 
@@ -6,6 +7,7 @@ const initState: ILayoutState = {
   isAside: true,
   pageTitle: null,
   isLoading: false,
+  navigateTo: null,
   notify: {
     open: false,
     type: ENotify.SUCCESS,
@@ -37,10 +39,15 @@ export const reducer = (state = initState, action: ILayoutAction) => {
         ...state,
         isLoading: action.value
       }
+    case LAYOUT_SET_NAVIGATE:
+      return {
+        ...state,
+        navigateTo: action.value
+      }
     case LAYOUT_SET_NOTIFY:
       return {
         ...state,
-        notify: action.value
+        path: action.value
       }
     default:
       return state

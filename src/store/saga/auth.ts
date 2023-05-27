@@ -2,13 +2,13 @@ import { takeLatest, put } from 'redux-saga/effects'
 import { AuthenticationUtil } from 'src/utils/authentication.util'
 import { StorageUtil } from 'src/utils/storage.util'
 import { AUTH_FALLBACK_KEY } from 'src/constants'
-import { createBrowserHistory } from 'history'
 
 import {
   AUTH_LOGIN,
   AUTH_SET_CREDENTIALS,
   AUTH_LOGOUT,
-  AUTH_LOGOUT_SUCCESS
+  AUTH_LOGOUT_SUCCESS,
+  LAYOUT_SET_NAVIGATE
 } from '../types'
 import { AuthApi } from 'src/apis'
 
@@ -42,8 +42,6 @@ import { AuthApi } from 'src/apis'
  */
 function * login(action: { type: typeof AUTH_LOGIN; payload: {email: string; password: string} }) {
   try {
-    const history = createBrowserHistory()
-
     // workaround for promise with generator function
     // const { data } = yield AuthApi.login(action.payload)
 
@@ -53,7 +51,11 @@ function * login(action: { type: typeof AUTH_LOGIN; payload: {email: string; pas
     })
 
     StorageUtil.removeItem(AUTH_FALLBACK_KEY)
-    return history.push('/dashboard')
+
+    yield put({
+      type: LAYOUT_SET_NAVIGATE,
+      value: '/design-system'
+    })
   } catch (error) {
     // MessageService.push({
     //   severity: EMessage.ERROR,

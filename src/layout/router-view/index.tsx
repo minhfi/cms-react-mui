@@ -1,24 +1,22 @@
 import { FC } from 'react'
+import { useSelector } from 'react-redux'
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom'
-
+import { getIsAuthenticated } from 'src/store/selectors'
 import { StorageUtil } from 'src/utils/storage.util'
 import { AUTH_FALLBACK_KEY } from 'src/constants'
 import { IRouterOption } from 'src/interfaces'
 import { routes } from 'src/router'
 import { LayoutContainer } from '../layout-container'
-import { useSelector } from 'react-redux'
-import { getIsAuthenticated } from 'src/store/selectors'
 
-const AuthRoute: FC<{
-  isAuthenticated: boolean | null
+const PrivateRoute: FC<{
   path: string
   exact?: boolean
   component: IRouterOption['component']
 }> = (props) => {
   const location = useLocation()
+  const isAuthenticated = useSelector(getIsAuthenticated)
 
-  console.log('props.isAuthenticated', props.isAuthenticated)
-  if (props.isAuthenticated) {
+  if (isAuthenticated) {
     return (
       <Route
         path={props.path}
@@ -32,26 +30,37 @@ const AuthRoute: FC<{
   return <Redirect to="/"/>
 }
 
-export const RouterView: FC = () => {
+const PublicRoute: FC<{
+  path: string
+  exact?: boolean
+  component: IRouterOption['component']
+  isRequired?: boolean
+}> = (props) => {
   const isAuthenticated = useSelector(getIsAuthenticated)
 
+  if (props.isRequired === false && isAuthenticated) {
+    return <Redirect to="/design-system"/>
+  }
+
+  return (
+    <Route
+      path={props.path}
+      exact={props.exact}
+      component={props.component}
+    />
+  )
+}
+
+export const RouterView: FC = () => {
   return (
     <LayoutContainer>
       <Switch>
         {routes.map(item => {
-          if (item.meta?.requireAuth) {
-            console.log(item, isAuthenticated)
-            return <AuthRoute key={item.path} {...item} isAuthenticated={isAuthenticated}/>
+          if (item.isRequired) {
+            return <PrivateRoute key={item.path} {...item}/>
           }
 
-          return (
-            <Route
-              key={item.path}
-              path={item.path}
-              exact={item.exact}
-              component={item.component}
-            />
-          )
+          return <PublicRoute key={item.path} {...item}/>
         })}
       </Switch>
     </LayoutContainer>
