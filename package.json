@@ -10,7 +10,8 @@
     "eslint": "eslint . --ext .jsx,.js,.tsx,.ts",
     "eslint-fix": "eslint . --ext .jsx,.js,.tsx,.ts --fix",
     "lint": "yarn eslint",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.ts": [
