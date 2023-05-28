@@ -13,9 +13,10 @@ interface IFormData {
   phone: string
 }
 
-const DesignSystem:FC = () => {
+const DesignSystem: FC = () => {
   const theme = useTheme()
   const dispatch = useDispatch()
+
   const { errors, validate } = useValidation<IFormData>()
 
   const [formData, setFormData] = useState<IFormData>({
@@ -26,12 +27,10 @@ const DesignSystem:FC = () => {
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
-    setFormData(
-      (prev) => ({
-        ...prev,
-        [name]: value
-      })
-    )
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
   const handleNotify = () => {
@@ -40,16 +39,18 @@ const DesignSystem:FC = () => {
         open: true,
         type: ENotify.SUCCESS,
         content: 'asdasdasd'
-      }))
+      })
+    )
   }
 
   const handleSubmit = async () => {
     try {
-      const isValid = await validate({ schema: formDataSchema, data: { ...formData } })
+      const isValid = await validate({
+        schema: formDataSchema,
+        data: { ...formData }
+      })
       if (!isValid) return null
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -79,15 +80,9 @@ const DesignSystem:FC = () => {
       <Box mt={3} mb={3}>
         <Typography variant="h5">Button</Typography>
         <Box display="flex" alignItems="center" gap={3} mb={2} mt={2}>
-          <Button>
-            Button primary
-          </Button>
-          <Button order="secondary">
-            Button secondary
-          </Button>
-          <Button disabled>
-            Button disabled
-          </Button>
+          <Button>Button primary</Button>
+          <Button order="secondary">Button secondary</Button>
+          <Button disabled>Button disabled</Button>
           <Button
             width={300}
             background={theme.colors['--color-negative-500']}
@@ -97,9 +92,7 @@ const DesignSystem:FC = () => {
           </Button>
         </Box>
 
-        <Button fullWidth>
-          Button Full width
-        </Button>
+        <Button fullWidth>Button Full width</Button>
       </Box>
 
       <Divider/>
