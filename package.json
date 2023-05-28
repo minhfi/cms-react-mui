@@ -9,9 +9,8 @@
     "preview": "vite preview",
     "eslint": "eslint . --ext .jsx,.js,.tsx,.ts",
     "eslint-fix": "eslint . --ext .jsx,.js,.tsx,.ts --fix",
-    "lint": "yarn eslint",
-    "precommit": "lint-staged",
-    "pre-commit": "lint-staged"
+    "postinstall": "rimraf .husky&&husky install&&husky add .husky/pre-commit \"npm run precommit\"",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.ts": [
@@ -21,7 +20,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn precommit"
+      "pre-commit": "yarn eslint"
     }
   },
   "dependencies": {
