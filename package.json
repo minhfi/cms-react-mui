@@ -9,18 +9,18 @@
     "preview": "vite preview",
     "eslint": "eslint . --ext .jsx,.js,.tsx,.ts",
     "eslint-fix": "eslint . --ext .jsx,.js,.tsx,.ts --fix",
-    "lint": "yarn run eslint",
+    "lint": "yarn eslint",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.ts": [
-      "yarn run lint",
+      "yarn lint",
       "tsc --noEmit"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run precommit"
+      "pre-commit": "yarn precommit"
     }
   },
   "dependencies": {
