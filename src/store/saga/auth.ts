@@ -1,39 +1,39 @@
+import { AxiosError } from 'axios'
+import { AuthApi, ProfileApi } from 'src/apis'
 import { takeLatest, put } from 'redux-saga/effects'
 import { AuthenticationUtil } from 'src/utils/authentication.util'
+import { convertErrorAPI } from 'src/utils/helpers.utils'
 import { StorageUtil } from 'src/utils/storage.util'
-import { AUTH_FALLBACK_KEY } from 'src/constants'
+import { IErrorResponse } from 'src/interfaces'
+import { ENotify } from './../../constants/enum'
 
 import {
   AUTH_LOGIN,
   AUTH_SET_CREDENTIALS,
   AUTH_LOGOUT,
   AUTH_LOGOUT_SUCCESS,
-  LAYOUT_SET_NAVIGATE
+  LAYOUT_SET_NAVIGATE,
+  LAYOUT_SET_NOTIFY,
+  AUTH_GET_PROFILE,
+  AUTH_SET_PROFILE
 } from '../types'
-import { AuthApi } from 'src/apis'
 
 /**
  * Get user credentials with jwt
  */
-// function * getProfile(action: { type: typeof AUTH_GET_PROFILE }) {
-//   try {
-//     const layout: { sharingToken: string | null } = yield select(state => state.layout)
+function * getProfile(action: { type: typeof AUTH_GET_PROFILE }) {
+  try {
+    // workaround for promise with generator function
+    const { data: profile } = yield ProfileApi.detail()
 
-//     // workaround for promise with generator function
-//     const { data: profile }: Awaited<ReturnType<typeof ProfileApi.detail>> = yield ProfileApi.detail()
-
-//     yield put({
-//       type: AUTH_SET_CREDENTIALS,
-//       value: profile
-//     })
-
-//     if (layout.sharingToken) {
-//       return browserHistory.push(`/share/view/${layout.sharingToken}`)
-//     }
-//   } catch (error) {
-//     yield put({ type: AUTH_LOGOUT_SUCCESS })
-//   }
-// }
+    yield put({
+      type: AUTH_SET_PROFILE,
+      value: profile
+    })
+  } catch (error) {
+    yield put({ type: AUTH_LOGOUT_SUCCESS })
+  }
+}
 
 /**
  * Call login with user credentials
@@ -43,24 +43,27 @@ import { AuthApi } from 'src/apis'
 function * login(action: { type: typeof AUTH_LOGIN; payload: {email: string; password: string} }) {
   try {
     // workaround for promise with generator function
-    // const { data } = yield AuthApi.login(action.payload)
+    const { data } = yield AuthApi.login(action.payload)
+    StorageUtil.setItem('_tk', data.data?.accessToken)
 
     yield put({
       type: AUTH_SET_CREDENTIALS,
-      value: {}
+      value: data.data
     })
-
-    StorageUtil.removeItem(AUTH_FALLBACK_KEY)
 
     yield put({
       type: LAYOUT_SET_NAVIGATE,
-      value: '/design-system'
+      value: '/home'
     })
   } catch (error) {
-    // MessageService.push({
-    //   severity: EMessage.ERROR,
-    //   content: getApiErrorMessage(error)
-    // })
+    yield put({
+      type: LAYOUT_SET_NOTIFY,
+      value: {
+        open: true,
+        type: ENotify.ERROR,
+        content: convertErrorAPI(error as AxiosError<IErrorResponse>)
+      }
+    })
   }
 }
 
@@ -70,19 +73,23 @@ function * login(action: { type: typeof AUTH_LOGIN; payload: {email: string; pas
  */
 function * logout(action: { type: typeof AUTH_LOGOUT }) {
   try {
-    yield AuthApi.logout()
+    // yield AuthApi.logout()
     yield put({ type: AUTH_LOGOUT_SUCCESS })
     yield AuthenticationUtil.clear()
   } catch (error) {
-    // MessageService.push({
-    //   severity: EMessage.ERROR,
-    //   content: getApiErrorMessage(error)
-    // })
+    yield put({
+      type: LAYOUT_SET_NOTIFY,
+      value: {
+        open: true,
+        type: ENotify.ERROR,
+        content: convertErrorAPI(error as AxiosError<IErrorResponse>)
+      }
+    })
   }
 }
 
 export const handler = function * () {
   yield takeLatest(AUTH_LOGIN, login)
   yield takeLatest(AUTH_LOGOUT, logout)
-  // yield takeLatest(AUTH_GET_PROFILE, getProfile)
+  yield takeLatest(AUTH_GET_PROFILE, getProfile)
 }

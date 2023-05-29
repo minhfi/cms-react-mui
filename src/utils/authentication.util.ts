@@ -13,7 +13,9 @@ const config = {
  * @return {string}
  */
 export function getToken(isRefresh = false) {
-  return isRefresh ? config.refreshToken : config.token
+  return isRefresh
+    ? config.refreshToken
+    : config.token
 }
 
 /**
@@ -47,11 +49,8 @@ export function clear() {
 
 export class AuthenticationUtil {
   static getToken = getToken
-
   static setToken = setToken
-
   static clear = clear
-
   static get tokenKey() {
     return tokenKey
   }

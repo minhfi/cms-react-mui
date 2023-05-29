@@ -4,11 +4,11 @@ import { makeStyles } from '@mui/styles'
 import { IThemeProps, TTheme, toCssVariables } from 'src/constants/mui-theme'
 import { getLayoutIsLoading, getModal, getThemeMode } from 'src/store/selectors'
 import { Loading } from 'src/components/loading'
+import { Notify } from 'src/components/notify'
 import { Modal } from 'src/components/modal'
 
 import { STContainer, STContent } from './styled'
 import { RouterView } from './router-view'
-import { Notify } from 'src/components/notify'
 
 const createThemeVariables = makeStyles<TTheme>(
   theme => ({

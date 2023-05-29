@@ -47,7 +47,7 @@ export const reducer = (state = initState, action: ILayoutAction) => {
     case LAYOUT_SET_NOTIFY:
       return {
         ...state,
-        path: action.value
+        notify: action.value
       }
     default:
       return state

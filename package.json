@@ -9,19 +9,7 @@
     "preview": "vite preview",
     "eslint": "eslint . --ext .jsx,.js,.tsx,.ts",
     "eslint-fix": "eslint . --ext .jsx,.js,.tsx,.ts --fix",
-    "postinstall": "rimraf .husky&&husky install&&husky add .husky/pre-commit \"npm run precommit\"",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.ts": [
-      "yarn lint",
-      "tsc --noEmit"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn eslint"
-    }
+    "pre-commit": "yarn eslint"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",

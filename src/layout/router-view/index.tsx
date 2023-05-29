@@ -39,7 +39,7 @@ const PublicRoute: FC<{
   const isAuthenticated = useSelector(getIsAuthenticated)
 
   if (props.isRequired === false && isAuthenticated) {
-    return <Redirect to="/design-system"/>
+    return <Redirect to="/home"/>
   }
 
   return (

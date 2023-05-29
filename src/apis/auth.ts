@@ -12,6 +12,6 @@ export class AuthApi {
   }
 
   static logout(): Promise<AxiosResponse<void>> {
-    return axios.delete(`${this._prefix}/sign-out`)
+    return axios.delete(`${this._prefix}/logout`)
   }
 }

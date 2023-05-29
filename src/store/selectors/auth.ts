@@ -11,3 +11,8 @@ export const getIsAuthenticated: TSelectorResult<IAuthState['isAuthenticated']> 
   (state: TAppState) => state.auth,
   (auth: IAuthState) => auth.isAuthenticated
 )
+
+export const getProfile: TSelectorResult<IAuthState['profile']> = createSelector(
+  (state: TAppState) => state.auth,
+  (auth: IAuthState) => auth.profile
+)

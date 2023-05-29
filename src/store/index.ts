@@ -11,7 +11,7 @@ import { saga } from './saga'
 const persistConfig = {
   key: 'store',
   storage,
-  blacklist: ['layout']
+  blacklist: ['layout', 'modal']
 }
 
 const initialStore = () => {

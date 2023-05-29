@@ -1,5 +1,7 @@
+import { AxiosError } from 'axios'
 import qs, { IStringifyOptions } from 'qs'
 import { ValidationError } from 'yup'
+import { IErrorResponse } from 'src/interfaces'
 
 /**
  * alphabeticalSort option of qs module
@@ -65,4 +67,8 @@ export const convertErrorYup = <T>(error: ValidationError): T => {
     }
   })
   return errors
+}
+
+export const convertErrorAPI = (error: AxiosError<IErrorResponse>) => {
+  return error?.response?.data?.message || ''
 }

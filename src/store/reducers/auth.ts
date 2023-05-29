@@ -1,5 +1,5 @@
 import { ICredential } from 'src/interfaces'
-import { AUTH_LOGOUT_SUCCESS, AUTH_SET_CREDENTIALS, IAuthState, TAuthAction } from '../types'
+import { AUTH_LOGOUT_SUCCESS, AUTH_SET_CREDENTIALS, AUTH_SET_PROFILE, IAuthState, TAuthAction } from '../types'
 
 export const initState: IAuthState = {
   isAuthenticated: null,
@@ -15,12 +15,19 @@ export const reducer = (state = initState, action: TAuthAction) => {
         isAuthenticated: true,
         credentials: action.value
       }
+    case AUTH_SET_PROFILE:
+      return {
+        ...state,
+        profile: action.value
+      }
     case AUTH_LOGOUT_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
-        credentials: {}
+        credentials: {},
+        profile: null
       }
+
     default:
       return state
   }

@@ -7,7 +7,6 @@ import { Button } from 'src/components/button'
 import { Input } from 'src/components/input'
 import { formDataSchema } from './schema'
 import { AUTH_LOGIN } from 'src/store/types'
-import { useHistory } from 'react-router'
 
 interface IFormData {
   email: string
@@ -36,8 +35,8 @@ const Login:FC = () => {
 
   const handleSubmit = async () => {
     try {
-      // const isValid = await validate({ schema: formDataSchema, data: { ...formData } })
-      // if (!isValid) return null
+      const isValid = await validate({ schema: formDataSchema, data: { ...formData } })
+      if (!isValid) return null
 
       dispatch(setLayoutLoading(true))
 
