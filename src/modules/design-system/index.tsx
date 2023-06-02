@@ -1,12 +1,13 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { Box, Divider, Typography, useTheme } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { setLayoutLoading, setLayoutNotify } from 'src/store/actions'
+import { setLayoutLoading } from 'src/store/actions'
 import { useValidation } from 'src/hooks/useValidation'
 import { Button } from 'src/components/button'
 import { Input } from 'src/components/input'
 import { ENotify } from 'src/constants/enum'
 import { formDataSchema } from './schema'
+import { notify } from 'src/utils/notify.util'
 
 interface IFormData {
   name: string
@@ -34,13 +35,10 @@ const DesignSystem: FC = () => {
   }
 
   const handleNotify = () => {
-    dispatch(
-      setLayoutNotify({
-        open: true,
-        type: ENotify.SUCCESS,
-        content: 'asdasdasd'
-      })
-    )
+    notify({
+      type: ENotify.SUCCESS,
+      message: 'Success'
+    })
   }
 
   const handleSubmit = async () => {
@@ -80,7 +78,7 @@ const DesignSystem: FC = () => {
       <Box mt={3} mb={3}>
         <Typography variant="h5">Button</Typography>
         <Box display="flex" alignItems="center" gap={3} mb={2} mt={2}>
-          <Button>Button primary</Button>
+          <Button onClick={handleNotify}>Button primary</Button>
           <Button order="secondary">Button secondary</Button>
           <Button disabled>Button disabled</Button>
           <Button

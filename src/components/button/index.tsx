@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { ButtonProps } from '@mui/material'
 import { ButtonPrimary, ButtonSecondary } from './styled'
 
@@ -8,7 +8,6 @@ export interface IButtonProps extends ButtonProps {
   height?: number
   background?: string
   colorText?: string
-  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const Button: FC<IButtonProps & ButtonProps<'span', { component?: 'span' }>> = ({ width, height, order, colorText, ...props }) => {

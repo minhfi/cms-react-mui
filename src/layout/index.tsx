@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@mui/styles'
+import { ToastContainer } from 'react-toastify'
 import { IThemeProps, TTheme, toCssVariables } from 'src/constants/mui-theme'
 import { getLayoutIsLoading, getModal, getThemeMode } from 'src/store/selectors'
 import { Loading } from 'src/components/loading'
-import { Notify } from 'src/components/notify'
 import { Modal } from 'src/components/modal'
 
 import { STContainer, STContent } from './styled'
@@ -32,8 +32,13 @@ export const AppLayout: FC = () => {
       </STContent>
 
       {appModal.open && <Modal/>}
+
       <Loading/>
-      <Notify/>
+
+      <ToastContainer
+        autoClose={5000}
+        hideProgressBar
+      />
     </STContainer>
   )
 }
