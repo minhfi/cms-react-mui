@@ -83,7 +83,7 @@ const DesignSystem: FC = () => {
           <Button disabled>Button disabled</Button>
           <Button
             width={300}
-            background={theme.colors['--color-negative-500']}
+            background={theme.colors['--color-red-600']}
             colorText={theme.colors['--color-white']}
           >
             Button other

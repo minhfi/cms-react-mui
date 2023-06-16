@@ -1,74 +1,112 @@
-import { FC, useEffect, useRef, useState } from 'react'
-import { LinkProps, match as Match, match, useHistory } from 'react-router-dom'
-import * as H from 'history'
-import { Box, Typography } from '@mui/material'
-import { menuConfig } from './menu-config'
-import { STAside, STAsideItem } from './styled'
+import { FC, SVGProps, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import AcUnitIcon from '@mui/icons-material/AcUnit'
+import { Box } from '@mui/material'
+import { STAside, STCollapsed, STHeader } from './styled'
 
-export interface INavLinkProps<S = H.LocationState> extends LinkProps<S> {
-    activeClassName?: string
-    activeStyle?: React.CSSProperties
-    exact?: boolean
-    strict?: boolean
-    isActive?<Params extends { [K in keyof Params]?: string }>(match: match<Params> | null, location: H.Location<S>): boolean
-    location?: H.Location<S>
-    active?: boolean
-  }
+interface IMenu {
+  title: string
+  path: string
+  icon?: SVGProps<SVGSVGElement>
+  submenu?: IMenu[]
+}
 
-const Aside:FC = () => {
+const Aside: FC = () => {
+  const location = useLocation()
   const history = useHistory()
-  const timeout = useRef<number | null>(null)
-  const [routeActive, setRouteActive] = useState<string | null>(null)
+  const [collapsed, setCollapsed] = useState(false)
 
-  const handleActiveRoute = (route: string) => {
-    if (timeout.current) clearTimeout(timeout.current)
-
-    timeout.current = setTimeout(() => {
-      setRouteActive(route)
-    }, 100)
-  }
-
-  const handleIsActive = (match: Match | null, location: H.Location<any>, route: string) => {
-    if (match) {
-      handleActiveRoute(route)
+  const menus: IMenu[] = [
+    {
+      title: 'Home',
+      path: '/home',
+      icon: <AcUnitIcon/>
+    },
+    {
+      title: 'Design system',
+      path: '/design-system',
+      icon: <AcUnitIcon/>
+    },
+    {
+      title: 'Charts',
+      path: '/charts',
+      icon: <AcUnitIcon/>,
+      submenu: [
+        {
+          title: 'Pie charts',
+          path: '/charts-pie'
+        },
+        {
+          title: 'Line charts',
+          path: '/charts-line'
+        }
+      ]
     }
+  ]
 
-    if (location.pathname === '/' && route === '/vibes') {
-      handleActiveRoute('/vibes')
-    }
-
-    return false
+  const handleRedirect = (path: string) => {
+    console.log(path)
+    return history.push(path)
   }
-
-  useEffect(() => {
-    // listen change history
-    history.listen((location) => {
-      if (!menuConfig.some(({ route }) => route === location.pathname)) {
-        setRouteActive(null)
-      }
-    })
-  }, [history])
 
   return (
-    <STAside>
-      {menuConfig.map(({ route, title }) => {
-        const isActive = routeActive === route
+    <Sidebar width="300px" collapsed={collapsed}>
+      <STAside>
+        <Box>
+          <STHeader>TEMPLATE</STHeader>
+          <Menu>
+            {menus.map((item) => {
+              const menuActive = location.pathname.includes(item.path)
 
-        return (
-          <STAsideItem
-            key={route}
-            to={route}
-            active={isActive}
-            isActive={(match, location) => handleIsActive(match, location, route)}
-          >
-            <Box display="flex" alignItems="center">
-              {/* <Icon width={24}/> */}
-              <Typography variant="body1">{title}</Typography>
-            </Box>
-          </STAsideItem>
-        )
-      })}
-    </STAside>
+              if (item.submenu) {
+                return (
+                  <SubMenu
+                    key={item.path}
+                    label={item.title}
+                    icon={item.icon}
+                    active={menuActive}
+                  >
+                    {item.submenu.map((submenu) => {
+                      const submenuActive: boolean = location.pathname.includes(
+                        submenu.path
+                      )
+
+                      return (
+                        <MenuItem
+                          key={submenu.path}
+                          active={submenuActive}
+                          icon={submenu.icon}
+                          onClick={() => handleRedirect(submenu.path)}
+                        >
+                          {submenu.title}
+                        </MenuItem>
+                      )
+                    })}
+                  </SubMenu>
+                )
+              }
+
+              return (
+                <MenuItem
+                  key={item.path}
+                  active={menuActive}
+                  icon={item.icon}
+                  onClick={() => handleRedirect(item.path)}
+                >
+                  {item.title}
+                </MenuItem>
+              )
+            })}
+          </Menu>
+        </Box>
+        <STCollapsed onClick={() => setCollapsed(!collapsed)}>
+          {collapsed ? <ArrowForwardIosIcon/> : <ArrowBackIosIcon/>}
+        </STCollapsed>
+      </STAside>
+    </Sidebar>
   )
 }
 

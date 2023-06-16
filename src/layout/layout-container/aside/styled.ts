@@ -1,83 +1,68 @@
 import { styled } from '@mui/material'
-import { INavLinkProps } from '.'
-import { NavLink } from 'react-router-dom'
 
-export const STAside = styled('div', {
-  name: 'Aside'
-})(({ theme }) => `
-  width: 300px;
-  min-width: 300px;
-  height: 100vh;
-  overflow: auto;
-  box-sizing: border-box;
-  padding: ${theme.spacing(5, 4)};
-  background-color: ${theme.colors['--color-neutral-900']} !important;
-
+export const STAside = styled('div', { label: 'Aside' })(({ theme }) => `
+  height: 100%;
+  background: #001529;
+  color: ${theme.colors['--color-white']};
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
-  @media (max-width: 1024px) {
-    width: 111px;
-    min-width: 111px;
-    padding: 40px 24px;
+  div.ps-submenu-content {
+    background-color: #001529;
   }
+  
+
+  a.ps-menu-button {
+    opacity: 0.5;
+    height: 48px;
+    font-size: 14px;
+    svg {
+      width: 16px;
+    }
+
+    &:hover {
+      opacity: 1;
+      background: unset;
+    }
+  }
+
+  a.ps-menu-button.ps-active {
+    opacity: 1;
+  }
+
+  li.ps-submenu-root >a.ps-menu-button.ps-active {
+    background: unset;
+  }
+
+  a.ps-menu-button.ps-active {
+    background: ${theme.colors['--color-primary-600']}
+  }
+
 `)
 
-export const STAsideItem = styled(NavLink, {
-  shouldForwardProp: prop => prop !== 'active',
-  name: 'AsideItem'
-})<INavLinkProps>(({ theme, ...props }) => `
-  width: 100%;
-  height: 60px; 
+export const STHeader = styled('div', { label: 'Header' })(({ theme }) => `
+  height: 80px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-radius: 12px;
-  padding: ${theme.spacing(2)};
-  margin-bottom: ${theme.spacing(1)};
-  box-sizing: border-box;
+  justify-content: center;
+  color: ${theme.colors['--color-white']}
+`)
+
+export const STCollapsed = styled('div', { label: 'Collapsed' })(({ theme }) => `
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${theme.colors['--color-white']};
+  background: #002140;
   cursor: pointer;
-  color: ${props.active ? theme.colors['--color-neutral-100'] : theme.colors['--color-neutral-300']};
-  background: ${props.active ? theme.colors['--color-neutral-600'] : 'unset'};
-  
+
   svg {
-    margin-right: ${theme.spacing(2)};
-
+    width: 16px;
+    
     path {
-      fill: ${props.active ? theme.colors['--color-neutral-100'] : theme.colors['--color-neutral-300']};
+      fill: #fff
     }
-  }
-
-  &:last-child {
-    margin-bottom: 0
-  }
-
-  &:hover {
-    color: ${theme.colors['--color-white']};
-
-    svg {
-      path {
-        fill: ${theme.colors['--color-white']};
-      }
-    }
-  }
-  
-
-  @media (max-width: 1024px) {
-    svg {
-      margin-right: unset;
-    }
-
-    justify-content: center;
-
-    div div {
-      display: none;
-    }
-
-    div span {
-      display: none;
-    }
-
-    background-color: ${props.active ? theme.colors['--color-neutral-600'] : 'unset'};
   }
 `)

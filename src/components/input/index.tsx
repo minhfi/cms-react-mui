@@ -42,7 +42,7 @@ export const Input: FC<InputProps> = ({ label, error, mb, required, ...props }) 
     <TextInput mb={mb} sx={props.sx}>
       {label && (
         <Typography variant="body1" sx={{ marginBottom: '8px' }}>
-          {label} {required && <Typography component="span" variant="body2" color={theme.colors['--color-negative-500']}>*</Typography>}
+          {label} {required && <Typography component="span" variant="body2" color={theme.colors['--color-red-600']}>*</Typography>}
         </Typography>
       )}
 
@@ -55,7 +55,7 @@ export const Input: FC<InputProps> = ({ label, error, mb, required, ...props }) 
 
       {error && (
         <Box mt={1}>
-          <Typography variant="body2" color={theme.colors['--color-negative-500']}>{error}</Typography>
+          <Typography variant="body2" color={theme.colors['--color-red-600']}>{error}</Typography>
         </Box>
       )}
     </TextInput>

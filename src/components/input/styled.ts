@@ -10,16 +10,16 @@ export const TextField = styled(MuiTextField, { label: 'TextFieldCustom' })(({ t
 
 
   div.MuiInputBase-root {
-    border: 1px solid ${theme.colors['--color-neutral-200']};
-    border-radius: 16px;
-    color: ${theme.colors['--color-neutral-700']};
+    border: 1px solid ${theme.colors['--color-gray-500']};
+    border-radius: 8px;
+    color: ${theme.colors['--color-black']};
     background-color: ${theme.colors['--color-white']};
 
     input {
       padding: ${theme.spacing(1, 2)};
       
       &::placeholder {
-        color: ${theme.colors['--color-neutral-300']};
+        color: ${theme.colors['--color-gray-600']};
       }
     }
   }
@@ -32,7 +32,7 @@ export const TextField = styled(MuiTextField, { label: 'TextFieldCustom' })(({ t
     fieldset {
       border-color: transparent;
       border-width: 1px !important;
-      border-radius: 16px !important;
+      border-radius: 8px !important;
     }
 
     &:hover,
@@ -44,7 +44,7 @@ export const TextField = styled(MuiTextField, { label: 'TextFieldCustom' })(({ t
 
     &.Mui-error {
       fieldset.MuiOutlinedInput-notchedOutline {
-        border-color: ${theme.colors['--color-negative-500']};
+        border-color: ${theme.colors['--color-red-600']};
       }
     }
   }

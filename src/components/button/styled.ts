@@ -10,7 +10,7 @@ const ButtonBase = styled(Button)<IButtonProps>(({ theme, ...props }) => css`
   
   padding: ${theme.spacing(0, 2)};
   text-transform: unset;
-  border-radius: 16px;
+  border-radius: 8px;
 
   &.MuiButton-fullWidth {
     width: 100% !important
@@ -21,24 +21,17 @@ export const ButtonPrimary = styled(ButtonBase, {
   label: 'Button',
   shouldForwardProp: prop => prop !== 'colorText'
 })<IButtonProps>(({ theme, ...props }) => `
-  color: ${props.colorText || `${theme.colors['--color-neutral-700']} !important`};
-  background-color: ${props.background || `${theme.colors['--color-primary-400']} !important`} ;
+  color: ${props.colorText || `${theme.colors['--color-white']}`};
+  background-color: ${props.background || `${theme.colors['--color-primary-600']}`};
 
   &:hover {
-    background-color: ${props.background || `${theme.colors['--color-primary-300']} !important`} ;
-  }
-
-  &:focus {
-    background-color: ${props.background || `${theme.colors['--color-primary-300']} !important`} ;
-  }
-
-  &:active {
-    background-color: ${props.background || `${theme.colors['--color-primary-400']} !important`} ;
+    color: ${props.colorText || `${theme.colors['--color-white']}`};
+    background-color: ${props.background || `${theme.colors['--color-primary-600']}`};
   }
 
   &:disabled {
-    color: ${theme.colors['--color-white']} !important;
-    background-color: ${theme.colors['--color-neutral-200']} !important;
+    color: ${theme.colors['--color-gray-600']};
+    background-color: ${theme.colors['--color-gray-300']};
   }
 `)
 
@@ -46,22 +39,19 @@ export const ButtonSecondary = styled(ButtonBase, {
   label: 'Button',
   shouldForwardProp: prop => prop !== 'colorText'
 })<IButtonProps>(({ theme }) => `
-color: ${theme.colors['--color-neutral-700']} !important;
-background-color: transparent !important;
+  color: ${theme.colors['--color-primary-600']};
+  background-color: transparent;
 
-&:hover {
-  background-color: ${theme.colors['--color-neutral-100']} !important;
-}
+  &:hover {
+    background-color: transparent;
+  }
 
-&:focus {
-  background-color: ${theme.colors['--color-neutral-100']} !important;
-}
+  &:focus {
+    background-color: transparent;
+  }
 
-&:active {
-  background-color: ${theme.colors['--color-neutral-200']} !important;
-}
-
-&:disabled {
-  color: ${theme.colors['--color-neutral-200']} !important;
-}
+  &:disabled {
+    color: ${theme.colors['--color-gray-600']};
+    background-color: ${theme.colors['--color-gray-300']};
+  }
 `)

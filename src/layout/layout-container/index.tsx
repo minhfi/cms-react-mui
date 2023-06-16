@@ -4,9 +4,10 @@ import { useHistory } from 'react-router'
 import { getIsAuthenticated, getLayoutIsAside, getLayoutIsHeader, getNavigateTo } from 'src/store/selectors'
 import { setLayoutAside, setLayoutHeader } from 'src/store/actions'
 import { AUTH_GET_PROFILE } from 'src/store/types'
-import Aside from './aside'
-import Header from './header'
+
 import { STContainer, STChildren, STContent } from './styled'
+import Header from './header'
+import Aside from './aside'
 
 export const LayoutContainer: FC = (props) => {
   const history = useHistory()
